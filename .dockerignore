@@ -1,0 +1,6 @@
+.git
+.env
+node-ai/node_modules
+node-ai/dist
+java-service/target
+ReliableRAG_Gaurav_Mahale.zip

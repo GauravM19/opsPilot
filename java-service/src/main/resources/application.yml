@@ -1,0 +1,20 @@
+spring:
+  application:
+    name: opspilot-incident-service
+  datasource:
+    url: ${SPRING_DATASOURCE_URL:jdbc:postgresql://localhost:5432/opspilot}
+    username: ${SPRING_DATASOURCE_USERNAME:opspilot}
+    password: ${SPRING_DATASOURCE_PASSWORD:opspilot}
+  jpa:
+    hibernate:
+      ddl-auto: validate
+    open-in-view: false
+  flyway:
+    enabled: true
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health,info,metrics
+server:
+  port: ${SERVER_PORT:8080}

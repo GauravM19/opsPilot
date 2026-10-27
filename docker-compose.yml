@@ -1,0 +1,49 @@
+services:
+  postgres:
+    image: pgvector/pgvector:pg16
+    environment:
+      POSTGRES_DB: opspilot
+      POSTGRES_USER: opspilot
+      POSTGRES_PASSWORD: opspilot
+    ports:
+      - "5432:5432"
+    volumes:
+      - opspilot-postgres:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U opspilot -d opspilot"]
+      interval: 5s
+      timeout: 3s
+      retries: 15
+
+  java-service:
+    build:
+      context: .
+      dockerfile: java-service/Dockerfile
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:postgresql://postgres:5432/opspilot
+      SPRING_DATASOURCE_USERNAME: opspilot
+      SPRING_DATASOURCE_PASSWORD: opspilot
+      OPSPILOT_ALLOWED_ORIGIN: http://localhost:3000
+    ports:
+      - "8080:8080"
+    depends_on:
+      postgres:
+        condition: service_healthy
+
+  node-ai:
+    build:
+      context: .
+      dockerfile: node-ai/Dockerfile
+    environment:
+      PORT: 3000
+      JAVA_SERVICE_URL: http://java-service:8080
+      KNOWLEDGE_PATH: /app/data/knowledge
+      OPENAI_API_KEY: ${OPENAI_API_KEY:-}
+      OPENAI_MODEL: ${OPENAI_MODEL:-gpt-4o-mini}
+    ports:
+      - "3000:3000"
+    depends_on:
+      - java-service
+
+volumes:
+  opspilot-postgres:

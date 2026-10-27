@@ -1,0 +1,11 @@
+.env
+.env.*
+!.env.example
+node-ai/node_modules/
+node-ai/dist/
+java-service/target/
+.idea/
+.vscode/
+*.log
+coverage/
+opspilot-postgres/

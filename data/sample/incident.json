@@ -1,0 +1,11 @@
+{
+  "title": "Checkout latency after configuration deployment",
+  "serviceName": "checkout-service",
+  "description": "p95 latency increased and payment requests are timing out after a configuration deployment.",
+  "severity": "P2",
+  "logs": [
+    "14:02 deployment completed",
+    "14:04 database pool wait time increased",
+    "14:06 request timeout rate increased"
+  ]
+}
