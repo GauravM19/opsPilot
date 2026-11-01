@@ -1,11 +1,11 @@
-FROM node:20-alpine AS build
+FROM node:26-alpine AS build
 WORKDIR /app
 COPY node-ai/package*.json node-ai/tsconfig.json ./node-ai/
 RUN cd node-ai && npm ci
 COPY node-ai/src ./node-ai/src
 RUN cd node-ai && npm run build
 
-FROM node:20-alpine
+FROM node:26-alpine
 WORKDIR /app
 ENV NODE_ENV=production
 COPY --from=build /app/node-ai/package*.json ./node-ai/
