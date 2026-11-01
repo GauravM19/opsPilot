@@ -14,7 +14,7 @@
   "dependencies": {
     "@langchain/core": "^0.3.40",
     "@langchain/textsplitters": "^0.1.0",
-    "@langchain/openai": "^0.4.5",
+    "@langchain/openai": "^1.8.0",
     "dotenv": "^16.4.7",
     "express": "^4.21.2",
     "helmet": "^8.0.0",
