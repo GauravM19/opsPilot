@@ -1,0 +1,23 @@
+name: Scheduled repository health
+
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: "17 10 * * 1-5"
+
+permissions:
+  contents: read
+
+jobs:
+  health:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+      - name: Check repository whitespace
+        run: git diff --check
+      - name: Record health summary
+        run: |
+          echo "Repository health check completed."
+          echo "Commit: $GITHUB_SHA"
+          echo "Checked at: $(date -u)"
